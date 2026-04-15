@@ -7,789 +7,261 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --sand: #F5F0E8;
-    --sand-dark: #EDE5D5;
-    --clay: #C2713A;
-    --clay-light: #E8956A;
-    --clay-dark: #8F4E22;
-    --ink: #1A1410;
-    --ink-mid: #4A3E35;
-    --ink-light: #9A8878;
-    --white: #FDFAF5;
-    --serif: 'Instrument Serif', Georgia, serif;
-    --sans: 'DM Sans', system-ui, sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--sans);
-    background: var(--white);
-    color: var(--ink);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 3rem;
-    background: rgba(253, 250, 245, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(194, 113, 58, 0.12);
-  }
-
-  .logo {
-    font-family: var(--serif);
-    font-size: 1.5rem;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-
-  .logo span { color: var(--clay); font-style: italic; }
-
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2.5rem;
-  }
-
-  nav ul a {
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: var(--ink-mid);
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    transition: color 0.2s;
-  }
-
-  nav ul a:hover { color: var(--clay); }
-
-  .nav-cta {
-    background: var(--clay);
-    color: var(--white) !important;
-    padding: 0.6rem 1.4rem;
-    border-radius: 100px;
-    font-weight: 500 !important;
-    transition: background 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--clay-dark) !important; color: var(--white) !important; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 5rem;
-    overflow: hidden;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 5rem 4rem 5rem 6rem;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--clay);
-    margin-bottom: 1.5rem;
-  }
-
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(3rem, 5vw, 4.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    margin-bottom: 1.75rem;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--clay);
-  }
-
-  .hero-sub {
-    font-size: 1.125rem;
-    color: var(--ink-mid);
-    line-height: 1.65;
-    max-width: 440px;
-    margin-bottom: 3rem;
-    font-weight: 300;
-  }
-
-  .hero-form {
-    background: var(--white);
-    border: 1.5px solid rgba(194, 113, 58, 0.2);
-    border-radius: 16px;
-    padding: 2rem;
-    max-width: 460px;
-    box-shadow: 0 8px 40px rgba(194, 113, 58, 0.08);
-  }
-
-  .hero-form h3 {
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    margin-bottom: 1.25rem;
-    color: var(--ink);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .form-row.single { grid-template-columns: 1fr; }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .form-group label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-  }
-
-  .form-group input, .form-group select {
-    font-family: var(--sans);
-    font-size: 0.9375rem;
-    padding: 0.65rem 0.875rem;
-    border: 1.5px solid rgba(26, 20, 16, 0.12);
-    border-radius: 8px;
-    background: var(--sand);
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-  }
-
-  .form-group input:focus, .form-group select:focus {
-    border-color: var(--clay);
-    background: var(--white);
-  }
-
-  .form-group input::placeholder { color: var(--ink-light); }
-
-  .btn-primary {
-    width: 100%;
-    padding: 0.875rem;
-    background: var(--clay);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: background 0.2s, transform 0.1s;
-    letter-spacing: 0.01em;
-  }
-
-  .btn-primary:hover { background: var(--clay-dark); }
-  .btn-primary:active { transform: scale(0.99); }
-
-  .form-note {
-    font-size: 0.75rem;
-    color: var(--ink-light);
-    text-align: center;
-    margin-top: 0.875rem;
-  }
-
-  .hero-right {
-    background: var(--sand);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-right-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Decorative llama SVG illustration area */
-  .hero-illustration {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .stats-float {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .stat-pill {
-    background: var(--white);
-    border: 1px solid rgba(194, 113, 58, 0.15);
-    border-radius: 100px;
-    padding: 0.625rem 1.25rem;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .stat-pill strong {
-    display: block;
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    color: var(--clay);
-    line-height: 1.2;
-  }
-
-  .stat-pill span {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-  }
-
-  /* HOW IT WORKS */
-  .section {
-    padding: 6rem 6rem;
-  }
-
-  .section-label {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--clay);
-    margin-bottom: 1rem;
-  }
-
-  .section h2 {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 3vw, 3rem);
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 4rem;
-    max-width: 500px;
-  }
-
-  .section h2 em { font-style: italic; color: var(--clay); }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .step {
-    padding: 2.5rem;
-    background: var(--sand);
-    position: relative;
-    transition: background 0.3s;
-  }
-
-  .step:hover { background: var(--sand-dark); }
-  .step:first-child { border-radius: 12px 0 0 12px; }
-  .step:last-child { border-radius: 0 12px 12px 0; }
-
-  .step-num {
-    font-family: var(--serif);
-    font-size: 3.5rem;
-    font-style: italic;
-    color: rgba(194, 113, 58, 0.25);
-    line-height: 1;
-    margin-bottom: 1.25rem;
-  }
-
-  .step h3 {
-    font-family: var(--serif);
-    font-size: 1.375rem;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-  }
-
-  .step p {
-    font-size: 0.9375rem;
-    color: var(--ink-mid);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* WHY US */
-  .why-section {
-    padding: 6rem;
-    background: var(--ink);
-    color: var(--white);
-  }
-
-  .why-section .section-label { color: var(--clay-light); }
-
-  .why-section h2 {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 3vw, 3rem);
-    letter-spacing: -0.025em;
-    color: var(--white);
-    margin-bottom: 4rem;
-    max-width: 480px;
-  }
-
-  .why-section h2 em { color: var(--clay-light); font-style: italic; }
-
-  .reasons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: rgba(255,255,255,0.06);
-  }
-
-  .reason {
-    background: var(--ink);
-    padding: 2.5rem;
-    transition: background 0.3s;
-  }
-
-  .reason:hover { background: #231d18; }
-
-  .reason-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(194, 113, 58, 0.15);
-    border-radius: 8px;
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .reason h3 {
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    color: var(--white);
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.02em;
-  }
-
-  .reason p {
-    font-size: 0.9rem;
-    color: rgba(253, 250, 245, 0.55);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* OFFER SECTION */
-  .offer-section {
-    padding: 7rem 6rem;
-    background: var(--sand);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-  }
-
-  .offer-left h2 {
-    font-family: var(--serif);
-    font-size: clamp(2.25rem, 3.5vw, 3.25rem);
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    color: var(--ink);
-    margin-bottom: 1.25rem;
-  }
-
-  .offer-left h2 em { font-style: italic; color: var(--clay); }
-
-  .offer-left p {
-    font-size: 1rem;
-    color: var(--ink-mid);
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    max-width: 420px;
-  }
-
-  .offer-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-  }
-
-  .offer-bullets li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9375rem;
-    color: var(--ink-mid);
-  }
-
-  .bullet-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--clay);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .offer-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2.5rem;
-    border: 1.5px solid rgba(194, 113, 58, 0.15);
-    box-shadow: 0 20px 60px rgba(194, 113, 58, 0.07);
-  }
-
-  .offer-card h3 {
-    font-family: var(--serif);
-    font-size: 1.5rem;
-    margin-bottom: 1.75rem;
-    color: var(--ink);
-  }
-
-  .offer-card .form-group { margin-bottom: 0.875rem; }
-
-  /* FOOTER */
-  footer {
-    background: var(--ink);
-    color: rgba(253, 250, 245, 0.5);
-    padding: 3rem 6rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  footer .logo { color: var(--white); }
-
-  footer p { font-size: 0.8125rem; }
-
-  footer nav ul { gap: 2rem; }
-  footer nav ul a { color: rgba(253, 250, 245, 0.5); font-size: 0.8125rem; }
-  footer nav ul a:hover { color: var(--clay-light); }
-
-  /* LLAMA SVG */
-  .llama-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 3rem;
-  }
-
-  .llama-badge {
-    background: var(--white);
-    border: 1px solid rgba(194, 113, 58, 0.2);
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    font-family: var(--serif);
-    font-size: 1.125rem;
-    color: var(--clay-dark);
-    font-style: italic;
-    letter-spacing: -0.01em;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
-    nav ul { display: none; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: 6rem 1.5rem 3rem; }
-    .hero-right { min-height: 340px; }
-    .section { padding: 4rem 1.5rem; }
-    .steps { grid-template-columns: 1fr; gap: 2px; }
-    .step:first-child { border-radius: 12px 12px 0 0; }
-    .step:last-child { border-radius: 0 0 12px 12px; }
-    .why-section { padding: 4rem 1.5rem; }
-    .reasons { grid-template-columns: 1fr 1fr; }
-    .offer-section { padding: 4rem 1.5rem; grid-template-columns: 1fr; gap: 2.5rem; }
-    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
-    footer nav ul { flex-wrap: wrap; justify-content: center; }
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-eyebrow { animation: fadeUp 0.6s 0.1s both ease-out; }
-  .hero h1 { animation: fadeUp 0.7s 0.2s both ease-out; }
-  .hero-sub { animation: fadeUp 0.7s 0.3s both ease-out; }
-  .hero-form { animation: fadeUp 0.7s 0.4s both ease-out; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--sand:#F5F0E8;--sand-dark:#EDE5D5;--clay:#C2713A;--clay-light:#E8956A;--clay-dark:#8F4E22;--ink:#1A1410;--ink-mid:#4A3E35;--ink-light:#9A8878;--white:#FDFAF5;--serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3rem;background:rgba(253,250,245,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(194,113,58,0.12)}
+.logo{font-family:var(--serif);font-size:1.5rem;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}
+.logo span{color:var(--clay);font-style:italic}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{font-size:.875rem;font-weight:400;color:var(--ink-mid);text-decoration:none;letter-spacing:.01em;transition:color .2s}
+.nav-links a:hover{color:var(--clay)}
+.nav-cta{background:var(--clay);color:var(--white)!important;padding:.6rem 1.4rem;border-radius:100px;font-weight:500!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--clay-dark)!important;color:var(--white)!important}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;min-width:44px;min-height:44px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .25s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(253,250,245,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(194,113,58,0.12);padding:1.5rem;flex-direction:column;gap:.25rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:.875rem .5rem;font-size:1rem;color:var(--ink-mid);text-decoration:none;border-bottom:1px solid rgba(194,113,58,0.08)}
+.mobile-menu a:last-child{border-bottom:none;background:var(--clay);color:var(--white);text-align:center;border-radius:8px;margin-top:.75rem;padding:.875rem;font-weight:500}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:5rem;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 6rem}
+.hero-eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--clay);margin-bottom:1.5rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2.75rem,5vw,4.5rem);line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:1.75rem}
+.hero h1 em{font-style:italic;color:var(--clay)}
+.hero-sub{font-size:1.125rem;color:var(--ink-mid);line-height:1.65;max-width:440px;margin-bottom:3rem;font-weight:300}
+.hero-form{background:var(--white);border:1.5px solid rgba(194,113,58,0.2);border-radius:16px;padding:2rem;max-width:460px;box-shadow:0 8px 40px rgba(194,113,58,0.08)}
+.hero-form h3{font-family:var(--serif);font-size:1.3rem;margin-bottom:1.25rem;color:var(--ink)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.form-row.single{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-group label{font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-light)}
+.form-group input,.form-group select{font-family:var(--sans);font-size:1rem;padding:.75rem .875rem;border:1.5px solid rgba(26,20,16,0.12);border-radius:8px;background:var(--sand);color:var(--ink);outline:none;transition:border-color .2s;-webkit-appearance:none;min-height:44px}
+.form-group input:focus,.form-group select:focus{border-color:var(--clay);background:var(--white)}
+.form-group input::placeholder{color:var(--ink-light)}
+.btn-primary{width:100%;padding:1rem;background:var(--clay);color:var(--white);font-family:var(--sans);font-size:1rem;font-weight:500;border:none;border-radius:8px;cursor:pointer;margin-top:.5rem;transition:background .2s,transform .1s;letter-spacing:.01em;min-height:48px}
+.btn-primary:hover{background:var(--clay-dark)}
+.btn-primary:active{transform:scale(0.99)}
+.form-note{font-size:.75rem;color:var(--ink-light);text-align:center;margin-top:.875rem}
+.hero-right{background:var(--sand);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-right-inner{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.llama-wrap{display:flex;flex-direction:column;align-items:center;gap:2rem;padding:3rem}
+.llama-badge{background:var(--white);border:1px solid rgba(194,113,58,0.2);border-radius:12px;padding:1rem 1.5rem;font-family:var(--serif);font-size:1.125rem;color:var(--clay-dark);font-style:italic;letter-spacing:-.01em}
+.stats-float{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;gap:.75rem}
+.stat-pill{background:var(--white);border:1px solid rgba(194,113,58,0.15);border-radius:100px;padding:.5rem 1rem;text-align:center;white-space:nowrap}
+.stat-pill strong{display:block;font-family:var(--serif);font-size:1.1rem;color:var(--clay);line-height:1.2}
+.stat-pill span{font-size:.65rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light)}
+.section{padding:6rem}
+.section-label{font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--clay);margin-bottom:1rem}
+.section h2{font-family:var(--serif);font-size:clamp(2rem,3vw,3rem);letter-spacing:-.025em;line-height:1.1;color:var(--ink);margin-bottom:4rem;max-width:500px}
+.section h2 em{font-style:italic;color:var(--clay)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.step{padding:2.5rem;background:var(--sand);position:relative;transition:background .3s}
+.step:hover{background:var(--sand-dark)}
+.step:first-child{border-radius:12px 0 0 12px}
+.step:last-child{border-radius:0 12px 12px 0}
+.step-num{font-family:var(--serif);font-size:3.5rem;font-style:italic;color:rgba(194,113,58,0.25);line-height:1;margin-bottom:1.25rem}
+.step h3{font-family:var(--serif);font-size:1.375rem;letter-spacing:-.02em;color:var(--ink);margin-bottom:.75rem}
+.step p{font-size:.9375rem;color:var(--ink-mid);line-height:1.65;font-weight:300}
+.why-section{padding:6rem;background:var(--ink);color:var(--white)}
+.why-section .section-label{color:var(--clay-light)}
+.why-section h2{font-family:var(--serif);font-size:clamp(2rem,3vw,3rem);letter-spacing:-.025em;color:var(--white);margin-bottom:4rem;max-width:480px}
+.why-section h2 em{color:var(--clay-light);font-style:italic}
+.reasons{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06)}
+.reason{background:var(--ink);padding:2.5rem;transition:background .3s}
+.reason:hover{background:#231d18}
+.reason-icon{width:40px;height:40px;background:rgba(194,113,58,0.15);border-radius:8px;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center}
+.reason h3{font-family:var(--serif);font-size:1.25rem;color:var(--white);margin-bottom:.75rem;letter-spacing:-.02em}
+.reason p{font-size:.9rem;color:rgba(253,250,245,0.55);line-height:1.65;font-weight:300}
+.offer-section{padding:7rem 6rem;background:var(--sand);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.offer-left h2{font-family:var(--serif);font-size:clamp(2.25rem,3.5vw,3.25rem);letter-spacing:-.03em;line-height:1.05;color:var(--ink);margin-bottom:1.25rem}
+.offer-left h2 em{font-style:italic;color:var(--clay)}
+.offer-left p{font-size:1rem;color:var(--ink-mid);line-height:1.7;margin-bottom:2.5rem;font-weight:300;max-width:420px}
+.offer-bullets{list-style:none;display:flex;flex-direction:column;gap:.875rem}
+.offer-bullets li{display:flex;align-items:center;gap:.75rem;font-size:.9375rem;color:var(--ink-mid)}
+.bullet-dot{width:8px;height:8px;background:var(--clay);border-radius:50%;flex-shrink:0}
+.offer-card{background:var(--white);border-radius:20px;padding:2.5rem;border:1.5px solid rgba(194,113,58,0.15);box-shadow:0 20px 60px rgba(194,113,58,0.07)}
+.offer-card h3{font-family:var(--serif);font-size:1.5rem;margin-bottom:1.75rem;color:var(--ink)}
+.offer-card .form-group{margin-bottom:.875rem}
+footer{background:var(--ink);color:rgba(253,250,245,0.5);padding:3rem 6rem;display:flex;align-items:center;justify-content:space-between}
+footer .logo{color:var(--white)}
+footer p{font-size:.8125rem}
+footer nav ul{list-style:none;display:flex;gap:2rem}
+footer nav ul a{color:rgba(253,250,245,0.5);font-size:.8125rem;text-decoration:none}
+footer nav ul a:hover{color:var(--clay-light)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{animation:fadeUp .6s .1s both ease-out}
+.hero h1{animation:fadeUp .7s .2s both ease-out}
+.hero-sub{animation:fadeUp .7s .3s both ease-out}
+.hero-form{animation:fadeUp .7s .4s both ease-out}
+@media(max-width:900px){
+nav{padding:1rem 1.25rem}
+.nav-links{display:none}
+.hamburger{display:flex}
+.hero{grid-template-columns:1fr;min-height:auto;padding-top:64px}
+.hero-left{padding:2.5rem 1.25rem 2rem}
+.hero-sub{font-size:1rem;margin-bottom:2rem}
+.hero-form{max-width:100%;padding:1.5rem}
+.hero-right{min-height:300px}
+.llama-wrap{padding:2rem 1.5rem 4rem;gap:1rem}
+.llama-wrap svg{width:160px;height:190px}
+.llama-badge{font-size:.95rem;padding:.75rem 1rem}
+.stats-float{gap:.5rem;bottom:1rem}
+.stat-pill{padding:.4rem .75rem}
+.stat-pill strong{font-size:1rem}
+.section{padding:3rem 1.25rem}
+.section h2{margin-bottom:2rem}
+.steps{grid-template-columns:1fr;gap:2px}
+.step{padding:1.75rem}
+.step:first-child{border-radius:12px 12px 0 0}
+.step:last-child{border-radius:0 0 12px 12px}
+.why-section{padding:3rem 1.25rem}
+.why-section h2{margin-bottom:2rem}
+.reasons{grid-template-columns:1fr 1fr}
+.reason{padding:1.75rem}
+.offer-section{padding:3rem 1.25rem;grid-template-columns:1fr;gap:2rem}
+.offer-card{padding:1.75rem}
+footer{padding:2rem 1.25rem;flex-direction:column;gap:1.25rem;text-align:center}
+footer nav ul{flex-wrap:wrap;justify-content:center}
+}
+@media(max-width:480px){
+.form-row{grid-template-columns:1fr}
+.reasons{grid-template-columns:1fr}
+.stats-float{flex-direction:row;flex-wrap:wrap;justify-content:center}
+.hero h1{font-size:2.5rem}
+}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
-  <a href="/" class="logo">Car<span>Llama</span></a>
-  <ul>
-    <li><a href="#how-it-works">How it works</a></li>
-    <li><a href="#why-us">Why us</a></li>
-    <li><a href="#get-offer" class="nav-cta">Get your offer</a></li>
-  </ul>
+<a href="/" class="logo">Car<span>Llama</span></a>
+<ul class="nav-links">
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#why-us">Why us</a></li>
+<li><a href="#get-offer" class="nav-cta">Get your offer</a></li>
+</ul>
+<button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
-
-<!-- HERO -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="#how-it-works" onclick="closeMenu()">How it works</a>
+<a href="#why-us" onclick="closeMenu()">Why us</a>
+<a href="#get-offer" onclick="closeMenu()">Get your offer &rarr;</a>
+</div>
 <section class="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Instant Cash Offers · Bay Area &amp; Beyond</p>
-    <h1>We buy your car.<br><em>No drama.</em></h1>
-    <p class="hero-sub">
-      Skip the tire-kickers and lowballers. CarLlama gives you a real cash offer in minutes, 
-      then picks up your car — or you drop it off. Done.
-    </p>
-
-    <div class="hero-form">
-      <h3>Get your free offer</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Year</label>
-          <input type="text" placeholder="2021" />
-        </div>
-        <div class="form-group">
-          <label>Make</label>
-          <input type="text" placeholder="Toyota" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Model</label>
-          <input type="text" placeholder="Camry" />
-        </div>
-        <div class="form-group">
-          <label>Mileage</label>
-          <input type="text" placeholder="45,000" />
-        </div>
-      </div>
-      <div class="form-row single">
-        <div class="form-group">
-          <label>VIN</label>
-          <input type="text" placeholder="17-character VIN" maxlength="17" autocomplete="off" style="text-transform:uppercase" />
-        </div>
-      </div>
-      <div class="form-row single">
-        <div class="form-group">
-          <label>Photos (all sides)</label>
-          <input type="file" accept="image/*" multiple />
-        </div>
-      </div>
-      <div class="form-row single">
-        <div class="form-group">
-          <label>Phone or Email</label>
-          <input type="text" placeholder="How should we reach you?" />
-        </div>
-      </div>
-      <button class="btn-primary">Get My Offer →</button>
-      <p class="form-note">No obligation. No spam. Offer valid 7 days.</p>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-right-inner">
-      <div class="llama-wrap">
-        <!-- Llama SVG illustration -->
-        <svg width="220" height="260" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Body -->
-          <ellipse cx="110" cy="190" rx="62" ry="50" fill="#E8956A" opacity="0.25"/>
-          <rect x="62" y="150" width="96" height="90" rx="28" fill="#C2713A"/>
-          <!-- Neck -->
-          <rect x="88" y="90" width="36" height="75" rx="16" fill="#C2713A"/>
-          <!-- Head -->
-          <ellipse cx="106" cy="82" rx="36" ry="32" fill="#D4824B"/>
-          <!-- Ears -->
-          <ellipse cx="80" cy="58" rx="10" ry="16" fill="#C2713A" transform="rotate(-15 80 58)"/>
-          <ellipse cx="132" cy="55" rx="10" ry="16" fill="#C2713A" transform="rotate(15 132 55)"/>
-          <ellipse cx="80" cy="59" rx="5" ry="9" fill="#F5C4A0" opacity="0.6" transform="rotate(-15 80 59)"/>
-          <ellipse cx="132" cy="56" rx="5" ry="9" fill="#F5C4A0" opacity="0.6" transform="rotate(15 132 56)"/>
-          <!-- Eyes -->
-          <ellipse cx="95" cy="78" rx="6" ry="7" fill="#1A1410"/>
-          <ellipse cx="117" cy="78" rx="6" ry="7" fill="#1A1410"/>
-          <ellipse cx="96" cy="76" rx="2.5" ry="3" fill="white"/>
-          <ellipse cx="118" cy="76" rx="2.5" ry="3" fill="white"/>
-          <!-- Nose -->
-          <ellipse cx="106" cy="92" rx="12" ry="8" fill="#B86430"/>
-          <ellipse cx="101" cy="92" rx="3.5" ry="3" fill="#8F4E22"/>
-          <ellipse cx="111" cy="92" rx="3.5" ry="3" fill="#8F4E22"/>
-          <!-- Legs -->
-          <rect x="72" y="225" width="22" height="30" rx="10" fill="#B86430"/>
-          <rect x="100" y="225" width="22" height="30" rx="10" fill="#B86430"/>
-          <rect x="128" y="225" width="22" height="25" rx="10" fill="#B86430"/>
-          <!-- Tail -->
-          <ellipse cx="158" cy="165" rx="12" ry="18" fill="#D4824B" transform="rotate(20 158 165)"/>
-          <!-- Collar / little scarf -->
-          <rect x="76" y="142" width="60" height="16" rx="8" fill="#F5C4A0" opacity="0.5"/>
-        </svg>
-
-        <div class="llama-badge">"Your car is worth more than you think."</div>
-      </div>
-
-      <div class="stats-float">
-        <div class="stat-pill">
-          <strong>$0</strong>
-          <span>Fees ever</span>
-        </div>
-        <div class="stat-pill">
-          <strong>24hr</strong>
-          <span>Avg. offer time</span>
-        </div>
-        <div class="stat-pill">
-          <strong>500+</strong>
-          <span>Cars bought</span>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="hero-left">
+<p class="hero-eyebrow">Instant Cash Offers &middot; Bay Area &amp; Beyond</p>
+<h1>We buy your car.<br><em>No drama.</em></h1>
+<p class="hero-sub">Skip the tire-kickers and lowballers. CarLlama gives you a real cash offer in minutes, then picks up your car &mdash; or you drop it off. Done.</p>
+<div class="hero-form">
+<h3>Get your free offer</h3>
+<div class="form-row">
+<div class="form-group"><label>Year</label><input type="text" inputmode="numeric" placeholder="2021"/></div>
+<div class="form-group"><label>Make</label><input type="text" placeholder="Toyota"/></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Model</label><input type="text" placeholder="Camry"/></div>
+<div class="form-group"><label>Mileage</label><input type="text" inputmode="numeric" placeholder="45,000"/></div>
+</div>
+<div class="form-row single">
+<div class="form-group"><label>Phone or Email</label><input type="text" placeholder="How should we reach you?"/></div>
+</div>
+<button class="btn-primary">Get My Offer &rarr;</button>
+<p class="form-note">No obligation. No spam. Offer valid 7 days.</p>
+</div>
+</div>
+<div class="hero-right">
+<div class="hero-right-inner">
+<div class="llama-wrap">
+<svg width="220" height="260" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="110" cy="190" rx="62" ry="50" fill="#E8956A" opacity="0.25"/>
+<rect x="62" y="150" width="96" height="90" rx="28" fill="#C2713A"/>
+<rect x="88" y="90" width="36" height="75" rx="16" fill="#C2713A"/>
+<ellipse cx="106" cy="82" rx="36" ry="32" fill="#D4824B"/>
+<ellipse cx="80" cy="58" rx="10" ry="16" fill="#C2713A" transform="rotate(-15 80 58)"/>
+<ellipse cx="132" cy="55" rx="10" ry="16" fill="#C2713A" transform="rotate(15 132 55)"/>
+<ellipse cx="80" cy="59" rx="5" ry="9" fill="#F5C4A0" opacity="0.6" transform="rotate(-15 80 59)"/>
+<ellipse cx="132" cy="56" rx="5" ry="9" fill="#F5C4A0" opacity="0.6" transform="rotate(15 132 56)"/>
+<ellipse cx="95" cy="78" rx="6" ry="7" fill="#1A1410"/>
+<ellipse cx="117" cy="78" rx="6" ry="7" fill="#1A1410"/>
+<ellipse cx="96" cy="76" rx="2.5" ry="3" fill="white"/>
+<ellipse cx="118" cy="76" rx="2.5" ry="3" fill="white"/>
+<ellipse cx="106" cy="92" rx="12" ry="8" fill="#B86430"/>
+<ellipse cx="101" cy="92" rx="3.5" ry="3" fill="#8F4E22"/>
+<ellipse cx="111" cy="92" rx="3.5" ry="3" fill="#8F4E22"/>
+<rect x="72" y="225" width="22" height="30" rx="10" fill="#B86430"/>
+<rect x="100" y="225" width="22" height="30" rx="10" fill="#B86430"/>
+<rect x="128" y="225" width="22" height="25" rx="10" fill="#B86430"/>
+<ellipse cx="158" cy="165" rx="12" ry="18" fill="#D4824B" transform="rotate(20 158 165)"/>
+<rect x="76" y="142" width="60" height="16" rx="8" fill="#F5C4A0" opacity="0.5"/>
+</svg>
+<div class="llama-badge">&ldquo;Your car is worth more than you think.&rdquo;</div>
+</div>
+<div class="stats-float">
+<div class="stat-pill"><strong>$0</strong><span>Fees ever</span></div>
+<div class="stat-pill"><strong>24hr</strong><span>Avg. offer</span></div>
+<div class="stat-pill"><strong>500+</strong><span>Cars bought</span></div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- HOW IT WORKS -->
 <section class="section" id="how-it-works">
-  <p class="section-label">The process</p>
-  <h2>Three steps to <em>cash in hand</em></h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3>Tell us about your car</h3>
-      <p>Year, make, model, mileage. Takes about 60 seconds. No VIN decoder, no endless forms — just the basics.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h3>Get a real offer</h3>
-      <p>We run your car against live market data and dealer comps, then call or text you with a firm number. Usually within 24 hours.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h3>Get paid, move on</h3>
-      <p>Accept the offer, hand over the keys, collect your check. We handle the title paperwork. You're done.</p>
-    </div>
-  </div>
+<p class="section-label">The process</p>
+<h2>Three steps to <em>cash in hand</em></h2>
+<div class="steps">
+<div class="step"><div class="step-num">01</div><h3>Tell us about your car</h3><p>Year, make, model, mileage. Takes about 60 seconds. No VIN decoder, no endless forms &mdash; just the basics.</p></div>
+<div class="step"><div class="step-num">02</div><h3>Get a real offer</h3><p>We run your car against live market data and dealer comps, then call or text you with a firm number. Usually within 24 hours.</p></div>
+<div class="step"><div class="step-num">03</div><h3>Get paid, move on</h3><p>Accept the offer, hand over the keys, collect your check. We handle the title paperwork. You&rsquo;re done.</p></div>
+</div>
 </section>
-
-<!-- WHY US -->
 <section class="why-section" id="why-us">
-  <p class="section-label">Why CarLlama</p>
-  <h2>We're not Carvana.<br><em>We're better.</em></h2>
-  <div class="reasons">
-    <div class="reason">
-      <div class="reason-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2L12.4 7.2L18 8.1L14 12L15 17.5L10 14.9L5 17.5L6 12L2 8.1L7.6 7.2L10 2Z" fill="#E8956A"/>
-        </svg>
-      </div>
-      <h3>Market-accurate offers</h3>
-      <p>Prices pulled from live dealer auction data, not stale book values. You get what your car is actually worth today.</p>
-    </div>
-    <div class="reason">
-      <div class="reason-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="10" r="8" stroke="#E8956A" stroke-width="1.5"/>
-          <path d="M10 6V10L13 13" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h3>Fast turnaround</h3>
-      <p>Most sellers have a firm offer within 24 hours. No waiting weeks for a buyer to show up and ghost you.</p>
-    </div>
-    <div class="reason">
-      <div class="reason-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="3" y="5" width="14" height="10" rx="2" stroke="#E8956A" stroke-width="1.5"/>
-          <path d="M3 8H17" stroke="#E8956A" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <h3>Zero fees, zero games</h3>
-      <p>The number we quote is the number you get. No "reconditioning fees" or last-minute deductions at the table.</p>
-    </div>
-    <div class="reason">
-      <div class="reason-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M4 10L8 14L16 6" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h3>We handle the paperwork</h3>
-      <p>Title transfer, release of liability, all of it. You sign, we file. No DMV lines on your end.</p>
-    </div>
-  </div>
+<p class="section-label">Why CarLlama</p>
+<h2>We&rsquo;re not Carvana.<br><em>We&rsquo;re better.</em></h2>
+<div class="reasons">
+<div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.4 7.2L18 8.1L14 12L15 17.5L10 14.9L5 17.5L6 12L2 8.1L7.6 7.2L10 2Z" fill="#E8956A"/></svg></div><h3>Market-accurate offers</h3><p>Prices pulled from live dealer auction data, not stale book values.</p></div>
+<div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#E8956A" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Fast turnaround</h3><p>Most sellers have a firm offer within 24 hours.</p></div>
+<div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="10" rx="2" stroke="#E8956A" stroke-width="1.5"/><path d="M3 8H17" stroke="#E8956A" stroke-width="1.5"/></svg></div><h3>Zero fees, zero games</h3><p>The number we quote is the number you get.</p></div>
+<div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10L8 14L16 6" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>We handle the paperwork</h3><p>Title transfer, release of liability, all of it.</p></div>
+</div>
 </section>
-
-<!-- GET OFFER CTA -->
 <section class="offer-section" id="get-offer">
-  <div class="offer-left">
-    <p class="section-label">Ready to sell?</p>
-    <h2>Your car.<br><em>Your timeline.</em></h2>
-    <p>
-      Whether you're upgrading, downsizing, or just done dealing with a car that isn't working for you — 
-      we make the selling part the easiest part of the whole thing.
-    </p>
-    <ul class="offer-bullets">
-      <li><span class="bullet-dot"></span>No appointment necessary</li>
-      <li><span class="bullet-dot"></span>All makes, models, and conditions considered</li>
-      <li><span class="bullet-dot"></span>We buy even if you still owe on the loan</li>
-      <li><span class="bullet-dot"></span>Pick-up available in the Bay Area</li>
-    </ul>
-  </div>
-
-  <div class="offer-card">
-    <h3>Start your offer</h3>
-    <div class="form-group"><label>Year</label><input type="text" placeholder="2020"/></div>
-    <div class="form-group"><label>Make</label><input type="text" placeholder="Honda"/></div>
-    <div class="form-group"><label>Model</label><input type="text" placeholder="Accord"/></div>
-    <div class="form-group"><label>Approximate mileage</label><input type="text" placeholder="55,000"/></div>
-    <div class="form-group"><label>Condition</label>
-      <select>
-        <option>Excellent — like new</option>
-        <option>Good — minor wear</option>
-        <option>Fair — some issues</option>
-        <option>Rough — needs work</option>
-      </select>
-    </div>
-    <div class="form-group"><label>Your phone number</label><input type="tel" placeholder="(510) 000-0000"/></div>
-    <button class="btn-primary">Request My Offer →</button>
-    <p class="form-note">We'll call or text you within 24 hours. No pressure, ever.</p>
-  </div>
+<div class="offer-left">
+<p class="section-label">Ready to sell?</p>
+<h2>Your car.<br><em>Your timeline.</em></h2>
+<p>We make the selling part the easiest part of the whole thing.</p>
+<ul class="offer-bullets">
+<li><span class="bullet-dot"></span>No appointment necessary</li>
+<li><span class="bullet-dot"></span>All makes, models, and conditions considered</li>
+<li><span class="bullet-dot"></span>We buy even if you still owe on the loan</li>
+<li><span class="bullet-dot"></span>Pick-up available in the Bay Area</li>
+</ul>
+</div>
+<div class="offer-card">
+<h3>Start your offer</h3>
+<div class="form-group" style="margin-bottom:.875rem"><label>Year</label><input type="text" inputmode="numeric" placeholder="2020"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Make</label><input type="text" placeholder="Honda"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Model</label><input type="text" placeholder="Accord"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Approx. mileage</label><input type="text" inputmode="numeric" placeholder="55,000"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Condition</label><select><option>Excellent</option><option>Good</option><option>Fair</option><option>Rough</option></select></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Phone number</label><input type="tel" placeholder="(510) 000-0000"/></div>
+<button class="btn-primary">Request My Offer &rarr;</button>
+<p class="form-note">We&rsquo;ll call or text within 24 hours.</p>
+</div>
 </section>
-
-<!-- FOOTER -->
 <footer>
-  <a href="/" class="logo">Car<span>Llama</span></a>
-  <div style="text-align:center">
-    <p>© 2026 CarLlama. All rights reserved.</p>
-    <p style="font-size:0.8rem;color:rgba(253,250,245,0.55);margin-top:0.3rem;">3860 Hilltop Road, Richmond, CA &nbsp;&bull;&nbsp; <a href="tel:5103676129" style="color:rgba(253,250,245,0.55);text-decoration:none;">(510) 367-6129</a></p>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="#">Privacy</a></li>
-      <li><a href="#">Terms</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
+<a href="/" class="logo">Car<span>Llama</span></a>
+<div style="text-align:center"><p>&copy; 2026 CarLlama. All rights reserved.</p><p style="font-size:.8rem;color:rgba(253,250,245,0.55);margin-top:.3rem;">3860 Hilltop Road, Richmond, CA &bull; <a href="tel:5103676129" style="color:rgba(253,250,245,0.55);text-decoration:none">(510) 367-6129</a></p></div>
+<nav><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Contact</a></li></ul></nav>
 </footer>
-
+<script>
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open')});
+function closeMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open')}
+document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMenu()});
+</script>
 </body>
 </html>
