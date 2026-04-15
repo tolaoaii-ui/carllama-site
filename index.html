@@ -167,6 +167,12 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <div class="form-group"><label>Mileage</label><input type="text" inputmode="numeric" placeholder="45,000"/></div>
 </div>
 <div class="form-row single">
+<div class="form-group"><label>VIN</label><input type="text" placeholder="17-character VIN" maxlength="17" autocomplete="off" style="text-transform:uppercase"/></div>
+</div>
+<div class="form-row single">
+<div class="form-group"><label>Photos (all sides)</label><input type="file" accept="image/*" multiple/></div>
+</div>
+<div class="form-row single">
 <div class="form-group"><label>Phone or Email</label><input type="text" placeholder="How should we reach you?"/></div>
 </div>
 <button class="btn-primary">Get My Offer &rarr;</button>
@@ -219,7 +225,7 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 </section>
 <section class="why-section" id="why-us">
 <p class="section-label">Why CarLlama</p>
-<h2>We&rsquo;re not Carvana.<br><em>We&rsquo;re better.</em></h2>
+<h2>We&rsquo;re not the big guys.<br><em>We&rsquo;re better.</em></h2>
 <div class="reasons">
 <div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.4 7.2L18 8.1L14 12L15 17.5L10 14.9L5 17.5L6 12L2 8.1L7.6 7.2L10 2Z" fill="#E8956A"/></svg></div><h3>Market-accurate offers</h3><p>Prices pulled from live dealer auction data, not stale book values.</p></div>
 <div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#E8956A" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round"/></svg></div><h3>Fast turnaround</h3><p>Most sellers have a firm offer within 24 hours.</p></div>
@@ -262,6 +268,29 @@ const mobileMenu=document.getElementById('mobileMenu');
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open')});
 function closeMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open')}
 document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMenu()});
+// Hero form submission -> CarLlama intake
+(function(){
+  const form=document.querySelector('.hero-form'); if(!form) return;
+  const btn=form.querySelector('.btn-primary'), note=form.querySelector('.form-note');
+  btn.addEventListener('click',async e=>{
+    e.preventDefault(); if(btn.disabled) return;
+    const inputs=form.querySelectorAll('input[type="text"]');
+    const [yearEl,makeEl,modelEl,mileageEl,vinEl,contactEl]=[inputs[0],inputs[1],inputs[2],inputs[3],inputs[4],inputs[5]];
+    const photoEl=form.querySelector('input[type="file"]');
+    if(!yearEl.value||!makeEl.value||!modelEl.value){note.textContent='Year, make, and model are required.';note.style.color='#c2410c';return;}
+    btn.disabled=true; const orig=btn.textContent; btn.textContent='Submitting...'; note.style.color='';
+    const fd=new FormData();
+    fd.append('year',yearEl.value); fd.append('make',makeEl.value); fd.append('model',modelEl.value);
+    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value); fd.append('contact',contactEl.value);
+    if(photoEl&&photoEl.files) for(const f of photoEl.files) fd.append('photos',f);
+    try{
+      const res=await fetch('https://dashboard.tolao.co/api/public/carllama-submit',{method:'POST',body:fd});
+      const d=await res.json();
+      if(d.ok){btn.textContent='\u2713 Got it \u2014 we\u2019ll reach out within 24h';btn.style.background='#16a34a';note.textContent='Thanks! Check your phone/email for our offer.';}
+      else{btn.textContent='Try again';btn.disabled=false;note.textContent=d.error||'Something went wrong \u2014 please retry.';note.style.color='#c2410c';}
+    }catch(err){btn.textContent=orig;btn.disabled=false;note.textContent='Connection error. Please try again.';note.style.color='#c2410c';}
+  });
+})();
 </script>
 </body>
 </html>
