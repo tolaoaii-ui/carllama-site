@@ -136,7 +136,7 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 }
 </style>
 </head>
-<body>
+<body id="top">
 <nav>
 <a href="/" class="logo">Car<span>Llama</span></a>
 <ul class="nav-links">
@@ -239,7 +239,7 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <p class="section-label">Ready to sell?</p>
 <h2 style="margin-left:auto;margin-right:auto">Your car.<br><em>Your timeline.</em></h2>
 <p style="max-width:520px;margin:0 auto 2rem;font-size:1.05rem;color:var(--ink-mid);font-weight:300">No appointments. All makes and conditions. We buy even with an active loan. Bay Area pick-up available.</p>
-<a href="#top" onclick="document.querySelector('.hero-form input').focus();" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:1rem 2.5rem;max-width:300px">Start your offer &rarr;</a>
+<a href="#top" onclick="event.preventDefault();document.getElementById('top').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.querySelector('.hero-form input').focus(),400);" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:1rem 2.5rem;max-width:300px">Start your offer &rarr;</a>
 </div>
 </section>
 <!-- FAQ -->
