@@ -173,15 +173,16 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <p class="hero-eyebrow">Instant Cash Offers &middot; Bay Area &amp; Beyond</p>
 <h1>We buy your car.<br><em>No drama.</em></h1>
 <p class="hero-sub">Skip the tire-kickers and lowballers. CarLlama gives you a real cash offer in minutes, then picks up your car &mdash; or you drop it off. Done.</p>
-<div class="hero-form">
+<form id="hero-form" novalidate>
+<div class="hero-form" style="max-width:460px">
 <h3>Get your free offer</h3>
 <div class="form-row">
-<div class="form-group"><label>Year</label><input type="text" inputmode="numeric" placeholder="2021"/></div>
-<div class="form-group"><label>Make</label><input type="text" placeholder="Toyota"/></div>
+<div class="form-group"><label>Year</label><input type="text" inputmode="numeric" id="hero-year" name="year" placeholder="2021"/></div>
+<div class="form-group"><label>Make</label><input type="text" id="hero-make" name="make" placeholder="Toyota"/></div>
 </div>
 <div class="form-row">
-<div class="form-group"><label>Model</label><input type="text" placeholder="Camry"/></div>
-<div class="form-group"><label>Mileage</label><input type="text" inputmode="numeric" placeholder="45,000"/></div>
+<div class="form-group"><label>Model</label><input type="text" id="hero-model" name="model" placeholder="Camry"/></div>
+<div class="form-group"><label>Mileage</label><input type="text" inputmode="numeric" id="hero-mileage" name="mileage" inputmode="numeric" placeholder="45,000"/></div>
 </div>
 <div class="form-row single">
 <div class="form-group"><label>VIN</label><input type="text" placeholder="17-character VIN" maxlength="17" autocomplete="off" style="text-transform:uppercase"/></div>
@@ -190,11 +191,12 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <div class="form-group"><label>Photos (all sides)</label><input type="file" accept="image/*" multiple/></div>
 </div>
 <div class="form-row single">
-<div class="form-group"><label>Phone or Email</label><input type="text" placeholder="How should we reach you?"/></div>
+<div class="form-group"><label>Phone or Email</label><input type="text" id="hero-contact" name="contact" placeholder="How should we reach you?"/></div>
 </div>
 <button class="btn-primary">Get My Offer &rarr;</button>
 <p class="form-note">No obligation. No spam. Offer valid 7 days.</p>
 </div>
+</form>
 </div>
 <div class="hero-right">
 <div class="hero-right-inner">
@@ -264,12 +266,12 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 </div>
 <div class="offer-card">
 <h3>Start your offer</h3>
-<div class="form-group" style="margin-bottom:.875rem"><label>Year</label><input type="text" inputmode="numeric" placeholder="2020"/></div>
-<div class="form-group" style="margin-bottom:.875rem"><label>Make</label><input type="text" placeholder="Honda"/></div>
-<div class="form-group" style="margin-bottom:.875rem"><label>Model</label><input type="text" placeholder="Accord"/></div>
-<div class="form-group" style="margin-bottom:.875rem"><label>Approx. mileage</label><input type="text" inputmode="numeric" placeholder="55,000"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Year</label><input type="text" inputmode="numeric" id="offer-year" name="year" placeholder="2020"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Make</label><input type="text" id="offer-make" name="make" placeholder="Honda"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Model</label><input type="text" id="offer-model" name="model" placeholder="Accord"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Approx. mileage</label><input type="text" inputmode="numeric" id="offer-mileage" name="mileage" inputmode="numeric" placeholder="55,000"/></div>
 <div class="form-group" style="margin-bottom:.875rem"><label>Condition</label><select><option>Excellent</option><option>Good</option><option>Fair</option><option>Rough</option></select></div>
-<div class="form-group" style="margin-bottom:.875rem"><label>Phone number</label><input type="tel" placeholder="(510) 000-0000"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Phone number</label><input type="tel" id="offer-phone" name="phone" type="tel" placeholder="(510) 000-0000"/></div>
 <button class="btn-primary">Request My Offer &rarr;</button>
 <p class="form-note">We&rsquo;ll call or text within 24 hours.</p>
 </div>
@@ -280,35 +282,48 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <nav><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Contact</a></li><li><a href="/admin.html">Admin</a></li></ul></nav>
 </footer>
 <script>
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobileMenu');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open')});
-function closeMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open')}
-document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileMenu.contains(e.target))closeMenu()});
-// Hero form submission -> CarLlama intake
-(function(){
-  const form=document.querySelector('.hero-form'); if(!form) return;
-  const btn=form.querySelector('.btn-primary'), note=form.querySelector('.form-note');
-  btn.addEventListener('click',async e=>{
-    e.preventDefault(); if(btn.disabled) return;
-    const inputs=form.querySelectorAll('input[type="text"]');
-    const [yearEl,makeEl,modelEl,mileageEl,vinEl,contactEl]=[inputs[0],inputs[1],inputs[2],inputs[3],inputs[4],inputs[5]];
-    const photoEl=form.querySelector('input[type="file"]');
-    if(!yearEl.value||!makeEl.value||!modelEl.value){note.textContent='Year, make, and model are required.';note.style.color='#c2410c';return;}
-    btn.disabled=true; const orig=btn.textContent; btn.textContent='Submitting...'; note.style.color='';
-    const fd=new FormData();
-    fd.append('year',yearEl.value); fd.append('make',makeEl.value); fd.append('model',modelEl.value);
-    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value); fd.append('contact',contactEl.value);
-    if(photoEl&&photoEl.files) for(const f of photoEl.files) fd.append('photos',f);
-    try{
-      const res=await fetch('https://dashboard.tolao.co/api/public/carllama-submit',{method:'POST',body:fd});
-      const d=await res.json();
-      if(d.ok){btn.textContent='\u2713 Got it \u2014 we\u2019ll reach out within 24h';btn.style.background='#16a34a';note.textContent='Thanks! Check your phone/email for our offer.';}
-      else{btn.textContent='Try again';btn.disabled=false;note.textContent=d.error||'Something went wrong \u2014 please retry.';note.style.color='#c2410c';}
-    }catch(err){btn.textContent=orig;btn.disabled=false;note.textContent='Connection error. Please try again.';note.style.color='#c2410c';}
+const _h=document.getElementById('hamburger'),_m=document.getElementById('mobileMenu');
+if(_h&&_m){_h.addEventListener('click',()=>{_h.classList.toggle('open');_m.classList.toggle('open')});document.addEventListener('click',e=>{if(!_h.contains(e.target)&&!_m.contains(e.target)){_h.classList.remove('open');_m.classList.remove('open')}});}
+
+function getField(container,name){return container.querySelector('[name="'+name+'"]');}
+
+function validateLead(d){
+  if(!d.year||!d.make||!d.model)return'Please fill in year, make, and model.';
+  const yr=parseInt(d.year);
+  if(isNaN(yr)||yr<1900||yr>new Date().getFullYear()+1)return'Please enter a valid year (e.g. 2019).';
+  if(!d.contact)return'Please enter a phone number or email.';
+  const em=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.contact);
+  const ph=/[0-9]{7,}/.test(d.contact.replace(/\D/g,''));
+  if(!em&&!ph)return'Please enter a valid phone or email.';
+  return null;
+}
+
+async function submitLead(container,btn){
+  const d={
+    year:getField(container,'year')?.value?.trim(),
+    make:getField(container,'make')?.value?.trim(),
+    model:getField(container,'model')?.value?.trim(),
+    mileage:getField(container,'mileage')?.value?.replace(/[^0-9]/g,''),
+    contact:getField(container,'contact')?.value?.trim()||getField(container,'phone')?.value?.trim()
+  };
+  const err=validateLead(d);
+  if(err){alert(err);return;}
+  const orig=btn.textContent;
+  btn.disabled=true;btn.textContent='Sending…';
+  try{
+    const r=await fetch('https://dashboard.tolao.co/api/public/carllama-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+    if(r.ok){btn.textContent="We'll be in touch!";container.querySelectorAll('input,select').forEach(el=>el.value='');}
+    else{btn.textContent=orig;btn.disabled=false;}
+  }catch(e){btn.textContent=orig;btn.disabled=false;}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const hf=document.getElementById('hero-form');
+  if(hf)hf.addEventListener('submit',e=>{e.preventDefault();submitLead(hf,hf.querySelector('button[type=submit],button.btn-primary'));});
+  document.querySelectorAll('.offer-card .btn-primary').forEach(btn=>{
+    btn.addEventListener('click',()=>submitLead(btn.closest('.offer-card'),btn));
   });
-})();
+});
 </script>
-<script>const _h=document.getElementById("hamburger"),_m=document.getElementById("mobileMenu");function closeM(){_h.classList.remove("open");_m.classList.remove("open")}if(_h){_h.addEventListener("click",()=>{_h.classList.toggle("open");_m.classList.toggle("open")});document.addEventListener("click",e=>{if(!_h.contains(e.target)&&!_m.contains(e.target))closeM();});}</script>
 </body>
 </html>
