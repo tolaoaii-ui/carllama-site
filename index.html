@@ -134,9 +134,23 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 .stats-float{flex-direction:row;flex-wrap:wrap;justify-content:center}
 .hero h1{font-size:2.5rem}
 }
+
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;min-width:44px;min-height:44px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .25s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(253,250,245,0.98);backdrop-filter:blur(12px);border-bottom:1px solid rgba(194,113,58,0.12);padding:1.5rem;flex-direction:column;gap:.25rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:.875rem .5rem;font-size:1rem;color:var(--ink-mid);text-decoration:none;border-bottom:1px solid rgba(194,113,58,0.08)}
+.mobile-menu a:last-child{border-bottom:none;background:var(--clay);color:var(--white);text-align:center;border-radius:8px;margin-top:.75rem;padding:.875rem;font-weight:500}
+.form-group input,.form-group select{min-height:44px}
+.btn-primary{min-height:48px}
+@media(max-width:900px){nav ul{display:none}.hamburger{display:flex}.hero{grid-template-columns:1fr;min-height:auto;padding-top:64px}.hero-left{padding:2.5rem 1.25rem 2rem}.hero-sub{font-size:1rem;margin-bottom:2rem}.hero-form{max-width:100%;padding:1.5rem}.hero-right{min-height:280px}.stats-float{gap:.5rem;bottom:1rem}.stat-pill{padding:.4rem .75rem}.section{padding:3rem 1.25rem}.section h2{margin-bottom:2rem}.steps{grid-template-columns:1fr}.step:first-child{border-radius:12px 12px 0 0}.step:last-child{border-radius:0 0 12px 12px}.why-section{padding:3rem 1.25rem}.reasons{grid-template-columns:1fr 1fr}.offer-section{padding:3rem 1.25rem;grid-template-columns:1fr;gap:2rem}footer{padding:2rem 1.25rem;flex-direction:column;gap:1.25rem;text-align:center}footer nav ul{display:flex!important;flex-wrap:wrap;justify-content:center}}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}.reasons{grid-template-columns:1fr}.hero h1{font-size:2.5rem}}
 </style>
 </head>
-<body id="top">
+<body>
 <nav>
 <a href="/" class="logo">Car<span>Llama</span></a>
 <ul class="nav-links">
@@ -146,6 +160,7 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 </ul>
 <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobileMenu"><a href="#how-it-works" onclick="closeM()">How it works</a><a href="#why-us" onclick="closeM()">Why us</a><a href="#get-offer" onclick="closeM()">Get your offer &rarr;</a></div>
 <div class="mobile-menu" id="mobileMenu">
 <a href="#how-it-works" onclick="closeMenu()">How it works</a>
 <a href="#why-us" onclick="closeMenu()">Why us</a>
@@ -172,9 +187,8 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <div class="form-row single">
 <div class="form-group"><label>Photos (all sides)</label><input type="file" accept="image/*" multiple/></div>
 </div>
-<div class="form-row">
-<div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" autocomplete="email"/></div>
-<div class="form-group"><label>Phone</label><input type="tel" placeholder="(510) 555-0000" autocomplete="tel"/></div>
+<div class="form-row single">
+<div class="form-group"><label>Phone or Email</label><input type="text" placeholder="How should we reach you?"/></div>
 </div>
 <button class="btn-primary">Get My Offer &rarr;</button>
 <p class="form-note">No obligation. No spam. Offer valid 7 days.</p>
@@ -234,64 +248,34 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <div class="reason"><div class="reason-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10L8 14L16 6" stroke="#E8956A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>We handle the paperwork</h3><p>Title transfer, release of liability, all of it.</p></div>
 </div>
 </section>
-<section class="offer-section" id="get-offer" style="grid-template-columns:1fr;text-align:center;padding:6rem 6rem">
-<div>
+<section class="offer-section" id="get-offer">
+<div class="offer-left">
 <p class="section-label">Ready to sell?</p>
-<h2 style="margin-left:auto;margin-right:auto">Your car.<br><em>Your timeline.</em></h2>
-<p style="max-width:520px;margin:0 auto 2rem;font-size:1.05rem;color:var(--ink-mid);font-weight:300">No appointments. All makes and conditions. We buy even with an active loan. Bay Area pick-up available.</p>
-<a href="#top" onclick="event.preventDefault();document.getElementById('top').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.querySelector('.hero-form input').focus(),400);" class="btn-primary" style="display:inline-block;text-decoration:none;width:auto;padding:1rem 2.5rem;max-width:300px">Start your offer &rarr;</a>
+<h2>Your car.<br><em>Your timeline.</em></h2>
+<p>We make the selling part the easiest part of the whole thing.</p>
+<ul class="offer-bullets">
+<li><span class="bullet-dot"></span>No appointment necessary</li>
+<li><span class="bullet-dot"></span>All makes, models, and conditions considered</li>
+<li><span class="bullet-dot"></span>We buy even if you still owe on the loan</li>
+<li><span class="bullet-dot"></span>Pick-up available in the Bay Area</li>
+</ul>
+</div>
+<div class="offer-card">
+<h3>Start your offer</h3>
+<div class="form-group" style="margin-bottom:.875rem"><label>Year</label><input type="text" inputmode="numeric" placeholder="2020"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Make</label><input type="text" placeholder="Honda"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Model</label><input type="text" placeholder="Accord"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Approx. mileage</label><input type="text" inputmode="numeric" placeholder="55,000"/></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Condition</label><select><option>Excellent</option><option>Good</option><option>Fair</option><option>Rough</option></select></div>
+<div class="form-group" style="margin-bottom:.875rem"><label>Phone number</label><input type="tel" placeholder="(510) 000-0000"/></div>
+<button class="btn-primary">Request My Offer &rarr;</button>
+<p class="form-note">We&rsquo;ll call or text within 24 hours.</p>
 </div>
 </section>
-<!-- FAQ -->
-<section class="section" id="faq" style="background:var(--sand)">
-<p class="section-label">Frequently asked</p>
-<h2>Your questions, <em>answered straight.</em></h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(194,113,58,.08);border-radius:12px;overflow:hidden">
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">How is your offer calculated?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">We run your VIN, mileage, and condition through live auction data (Manheim), retail book values (Kelley Blue Book), and comparable listings in your region. The offer reflects current wholesale demand — the same pricing dealers pay at auction.</p>
-</div>
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">Is the offer binding?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">Our offer is firm for 7 days, conditional on a quick in-person inspection. If the vehicle matches what you described, we honor the number. You're never obligated to accept.</p>
-</div>
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">Will you pay more than trade-in?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">Usually, yes. Dealers quote trade-in value (below wholesale) to leave margin for their resale. We price at the wholesale level with a modest operating margin — typically several hundred to a couple thousand dollars above a dealer trade-in for most vehicles.</p>
-</div>
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">What happens to my data?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">We use your VIN and contact info only to generate the offer and reach you about it. We don't sell your information to advertisers or lead brokers. Full details in our <a href="/privacy.html" style="color:var(--clay)">Privacy Policy</a>.</p>
-</div>
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">What if the car has a lien?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">We can buy the car and pay off the lien directly from the proceeds. Just let us know who holds the lien. The difference goes to you.</p>
-</div>
-<div style="background:var(--white);padding:2rem">
-<h3 style="font-family:var(--serif);font-size:1.25rem;color:var(--ink);margin-bottom:.5rem">Do you only buy Bay Area cars?</h3>
-<p style="color:var(--ink-mid);font-size:.95rem;font-weight:300;line-height:1.65">Currently we're focused on the greater Bay Area (San Francisco, East Bay, Peninsula, South Bay). We'll expand to additional regions as demand supports it. Contact us if you're outside the area — we may still be able to help.</p>
-</div>
-</div>
-</section>
-
-<!-- Trust strip -->
-<section style="background:var(--white);padding:3rem 6rem;border-top:1px solid rgba(194,113,58,.12)">
-<div style="max-width:1100px;margin:0 auto;text-align:center">
-<p class="section-label" style="margin-bottom:1.5rem">How we price</p>
-<p style="font-family:var(--serif);font-size:1.5rem;color:var(--ink);line-height:1.4;letter-spacing:-.02em;max-width:720px;margin:0 auto 2rem">Every offer is benchmarked against <em style="color:var(--clay);font-style:italic">Kelley Blue Book, Manheim Market Report,</em> and comparable retail listings in your market.</p>
-<div style="display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;color:var(--ink-light);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500">
-<span>Live Market Data</span>
-<span>Encrypted Transmission</span>
-<span>No-Spam Guarantee</span>
-<span>Local & Family-Run</span>
-</div>
-</div>
-</section>
-
 <footer>
 <a href="/" class="logo">Car<span>Llama</span></a>
-<div style="text-align:center"><p>&copy; 2026 CarLlama. All rights reserved.</p><p style="font-size:.8rem;color:rgba(253,250,245,0.55);margin-top:.3rem;">3860 Hilltop Road, Richmond, CA &bull; <a href="tel:5103676129" style="color:rgba(253,250,245,0.55);text-decoration:none">(510) 367-6129</a> &bull; <a href="mailto:hello@carllama.ai" style="color:rgba(253,250,245,0.55);text-decoration:none">hello@carllama.ai</a></p></div>
-<nav><ul><li><a href="/about.html">About</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="/terms.html">Terms</a></li><li><a href="mailto:hello@carllama.ai">Contact</a></li><li><a href="/admin.html">Admin</a></li></ul></nav>
+<div style="text-align:center"><p>&copy; 2026 CarLlama. All rights reserved.</p><p style="font-size:.8rem;color:rgba(253,250,245,0.55);margin-top:.3rem;">3860 Hilltop Road, Richmond, CA &bull; <a href="tel:5103676129" style="color:rgba(253,250,245,0.55);text-decoration:none">(510) 367-6129</a></p></div>
+<nav><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Contact</a></li><li><a href="/admin.html">Admin</a></li></ul></nav>
 </footer>
 <script>
 const hamburger=document.getElementById('hamburger');
@@ -305,19 +289,14 @@ document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileM
   const btn=form.querySelector('.btn-primary'), note=form.querySelector('.form-note');
   btn.addEventListener('click',async e=>{
     e.preventDefault(); if(btn.disabled) return;
-    // Collect fields by position in the form (year, make, model, mileage, VIN [text], email, phone)
-    const txt=form.querySelectorAll('input[type="text"]');
-    const yearEl=txt[0], makeEl=txt[1], modelEl=txt[2], mileageEl=txt[3], vinEl=txt[4];
-    const emailEl=form.querySelector('input[type="email"]');
-    const phoneEl=form.querySelector('input[type="tel"]');
+    const inputs=form.querySelectorAll('input[type="text"]');
+    const [yearEl,makeEl,modelEl,mileageEl,vinEl,contactEl]=[inputs[0],inputs[1],inputs[2],inputs[3],inputs[4],inputs[5]];
     const photoEl=form.querySelector('input[type="file"]');
     if(!yearEl.value||!makeEl.value||!modelEl.value){note.textContent='Year, make, and model are required.';note.style.color='#c2410c';return;}
-    if(!emailEl.value&&!phoneEl.value){note.textContent='Please provide an email or phone so we can send your offer.';note.style.color='#c2410c';return;}
     btn.disabled=true; const orig=btn.textContent; btn.textContent='Submitting...'; note.style.color='';
     const fd=new FormData();
     fd.append('year',yearEl.value); fd.append('make',makeEl.value); fd.append('model',modelEl.value);
-    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value);
-    fd.append('email',emailEl.value||''); fd.append('phone',phoneEl.value||'');
+    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value); fd.append('contact',contactEl.value);
     if(photoEl&&photoEl.files) for(const f of photoEl.files) fd.append('photos',f);
     try{
       const res=await fetch('https://dashboard.tolao.co/api/public/carllama-submit',{method:'POST',body:fd});
@@ -328,5 +307,6 @@ document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileM
   });
 })();
 </script>
+<script>const _h=document.getElementById("hamburger"),_m=document.getElementById("mobileMenu");function closeM(){_h.classList.remove("open");_m.classList.remove("open")}if(_h){_h.addEventListener("click",()=>{_h.classList.toggle("open");_m.classList.toggle("open")});document.addEventListener("click",e=>{if(!_h.contains(e.target)&&!_m.contains(e.target))closeM();});}</script>
 </body>
 </html>
