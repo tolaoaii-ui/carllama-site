@@ -172,8 +172,9 @@ footer nav ul{flex-wrap:wrap;justify-content:center}
 <div class="form-row single">
 <div class="form-group"><label>Photos (all sides)</label><input type="file" accept="image/*" multiple/></div>
 </div>
-<div class="form-row single">
-<div class="form-group"><label>Phone or Email</label><input type="text" placeholder="How should we reach you?"/></div>
+<div class="form-row">
+<div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" autocomplete="email"/></div>
+<div class="form-group"><label>Phone</label><input type="tel" placeholder="(510) 555-0000" autocomplete="tel"/></div>
 </div>
 <button class="btn-primary">Get My Offer &rarr;</button>
 <p class="form-note">No obligation. No spam. Offer valid 7 days.</p>
@@ -274,14 +275,19 @@ document.addEventListener('click',e=>{if(!hamburger.contains(e.target)&&!mobileM
   const btn=form.querySelector('.btn-primary'), note=form.querySelector('.form-note');
   btn.addEventListener('click',async e=>{
     e.preventDefault(); if(btn.disabled) return;
-    const inputs=form.querySelectorAll('input[type="text"]');
-    const [yearEl,makeEl,modelEl,mileageEl,vinEl,contactEl]=[inputs[0],inputs[1],inputs[2],inputs[3],inputs[4],inputs[5]];
+    // Collect fields by position in the form (year, make, model, mileage, VIN [text], email, phone)
+    const txt=form.querySelectorAll('input[type="text"]');
+    const yearEl=txt[0], makeEl=txt[1], modelEl=txt[2], mileageEl=txt[3], vinEl=txt[4];
+    const emailEl=form.querySelector('input[type="email"]');
+    const phoneEl=form.querySelector('input[type="tel"]');
     const photoEl=form.querySelector('input[type="file"]');
     if(!yearEl.value||!makeEl.value||!modelEl.value){note.textContent='Year, make, and model are required.';note.style.color='#c2410c';return;}
+    if(!emailEl.value&&!phoneEl.value){note.textContent='Please provide an email or phone so we can send your offer.';note.style.color='#c2410c';return;}
     btn.disabled=true; const orig=btn.textContent; btn.textContent='Submitting...'; note.style.color='';
     const fd=new FormData();
     fd.append('year',yearEl.value); fd.append('make',makeEl.value); fd.append('model',modelEl.value);
-    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value); fd.append('contact',contactEl.value);
+    fd.append('mileage',mileageEl.value); fd.append('vin',vinEl.value);
+    fd.append('email',emailEl.value||''); fd.append('phone',phoneEl.value||'');
     if(photoEl&&photoEl.files) for(const f of photoEl.files) fd.append('photos',f);
     try{
       const res=await fetch('https://dashboard.tolao.co/api/public/carllama-submit',{method:'POST',body:fd});
